@@ -5,7 +5,6 @@
 
 .heading{
     font-size: 20px;
-    text-transform: capitalize;
     font-weight: 400;
     margin-bottom: 40px;
     padding: 0 10vw;
@@ -16,6 +15,7 @@
 }
 
 .product-container{
+    padding: 0 10vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     height: auto;
