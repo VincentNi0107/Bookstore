@@ -1,8 +1,9 @@
 import React from 'react';
 import '../styles/login.css'
 import darklogo from '../assets/dark-logo.png'
+import {withRouter} from "react-router-dom";
 
-export class SignupView extends React.Component{
+class SignupView extends React.Component{
     render(){
         return(          
             <div className="signupcontainer">
@@ -23,3 +24,4 @@ export class SignupView extends React.Component{
         );
     }
 }
+export default withRouter(SignupView);

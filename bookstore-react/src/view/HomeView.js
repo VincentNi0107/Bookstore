@@ -3,6 +3,8 @@ import {Nav} from '../components/Nav';
 import React from 'react';
 import BasicCard from '../components/BasicCard';
 import '../styles/home.css';
+import {getBooks} from "../services/bookService";
+import {withRouter} from "react-router-dom";
 
 const PRODUCTS = [
     {title: 'Life Force', price: '$20', author: 'Tony Robbins',picture:require('../assets/card1-1.png'),originPrice:'$40',discount:'50'},
@@ -16,13 +18,21 @@ const PRODUCTS = [
     {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
 
 ];
-export class HomeView extends React.Component{
+class HomeView extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            products:PRODUCTS,
+            products:[],
         };
     }
+
+    componentDidMount() {
+        const callback =  (data) => {
+           this.setState({products:data});
+        };
+        getBooks({"search":null}, callback);
+    }
+
     render(){
         return(
             <div>
@@ -39,3 +49,4 @@ export class HomeView extends React.Component{
         );
     }
 }
+export default withRouter(HomeView);

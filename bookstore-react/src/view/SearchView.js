@@ -1,9 +1,11 @@
 import '../styles/home.css';
 import '../styles/search.css';
 import Footer from '../components/Footer';
-import {Nav} from '../components/Nav';
+import {SearchNav} from '../components/SearchNav';
 import {Card} from '../components/Card';
 import React from 'react';
+import {getBooks} from "../services/bookService";
+import {withRouter} from "react-router-dom";
 
 const PRODUCTS = [
         {title: 'Life Force', price: '$20', author: 'Tony Robbins',picture:require('../assets/card1-1.png'),originPrice:'$40',discount:'50'},
@@ -18,20 +20,37 @@ const PRODUCTS = [
 
     ];
 
-export class SearchView extends React.Component{
+class SearchView extends React.Component{
     constructor(props){
         super(props);
         this.state={
             filterText: '',
             newFilterText:'',
             edit:null,
-            products:PRODUCTS,
+            products:[],
         };
         this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
         this.handleFilterButton=this.handleFilterButton.bind(this);
         this.handleShowEditor=this.handleShowEditor.bind(this);
         this.handleSave=this.handleSave.bind(this);
     }
+    componentDidMount() {
+
+        const callback =  (data) => {
+           this.setState({products:data});
+        };
+
+        getBooks({"search":null}, callback);
+        const query = this.props.location.search;
+        if(query){
+            const arr = query.split('&');
+            const filterText = arr[0].substr(12);
+            this.setState({filterText:filterText});
+            this.props.location.search='';
+        }
+        
+    }
+
     handleFilterTextChange(filterText) {
         this.setState({
             newFilterText: filterText
@@ -55,7 +74,7 @@ export class SearchView extends React.Component{
         let data = this.state.products.slice();
         switch(this.state.edit.cate){
             case 'title':
-                data[this.state.edit.idx].title=input.value;
+                data[this.state.edit.idx].bookName=input.value;
                 break;
             case 'author':
                 data[this.state.edit.idx].author=input.value;
@@ -77,7 +96,7 @@ export class SearchView extends React.Component{
     render(){
         return(
             <div>
-                <Nav filterText={this.state.newFilterText} onFilterTextChange={this.handleFilterTextChange} onButtonClick={this.handleFilterButton} />
+                <SearchNav filterText={this.state.newFilterText} onFilterTextChange={this.handleFilterTextChange} onButtonClick={this.handleFilterButton} />
                 <section className="search-results">
                 <h2 className="heading">Search Results for <span>{this.state.filterText}</span></h2>
                 <Card products={this.state.products} filterText={this.state.filterText} onEdit={this.handleShowEditor} edit={this.state.edit} onSave={this.handleSave}/>
@@ -87,3 +106,4 @@ export class SearchView extends React.Component{
         );
     }
 }
+export default withRouter(SearchView);

@@ -1,22 +1,29 @@
 import React, { useRef } from 'react';
 import arrow from '../assets/arrow.png';
+import {Link} from 'react-router-dom'
 
 function BasicCard(props){
         const ref = useRef(null);
         const rows = [];
-        props.products.forEach((product) => {            
+        props.products.forEach((product) => {  
+            let discount= Math.trunc((1-product.price/product.originPrice)*100);
             rows.push(
                 <div className="product-card">
                     <div className="product-image">
-                        <span className="discount-tag">{product.discount}% off</span>
-                        <img src={product.picture} className="product-thumb" alt=""/>
-                        <button className="card-btn">add to cart</button>
+                        <span className="discount-tag">{discount}% off</span>
+                        <img src={product.imageUrl} className="product-thumb" alt=""/>
+                        <Link to={{
+                            pathname: '/product',
+                            search: '?id=' + product.bookId}}
+                        >
+                        <button className="card-btn">See Details</button>
+                        </Link>
                     </div>
-                    <div className="product-info">
-                        <h2 className="product-brand">{product.title}</h2>
+                    <div className="product-info">                
+                        <h2 className="product-brand">{product.bookName}</h2>
                         <p className="product-short-des">{product.author}</p>
-                        <span className="price">{product.price}</span>
-                        <span className="actual-price">{product.originPrice}</span>
+                        <span className="price">${product.price}</span>
+                        <span className="actual-price">${product.originPrice}</span>
                     </div>
                 </div>
             );

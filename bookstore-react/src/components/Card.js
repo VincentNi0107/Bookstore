@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
+
 export class Card extends React.Component{
     constructor(props){
         super(props);
@@ -16,20 +18,20 @@ export class Card extends React.Component{
         const rows = [];
         const filterText = this.props.filterText;
         this.props.products.map((product,idx) => {
-            if (product.title.toLowerCase().indexOf(filterText) === -1) {
+            if (product.bookName.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
                 return;
             }
-            let contentTitle=(<h2 className="product-brand" onDoubleClick={this.showEditor} data-cate='title' data-idx={idx}>{product.title}</h2>);
+            let contentTitle=(<h2 className="product-brand" onDoubleClick={this.showEditor} data-cate='title' data-idx={idx}>{product.bookName}</h2>);
             let contentAuthor=(<p className="product-short-des" data-idx={idx} data-cate="author" onDoubleClick={this.showEditor}>{product.author}</p>);
-            let contentPrice=(<span className="price" data-idx={idx} data-cate="price" onDoubleClick={this.showEditor}>{product.price}</span>);
-            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice" onDoubleClick={this.showEditor}>{product.originPrice}</span>);
+            let contentPrice=(<span className="price" data-idx={idx} data-cate="price" onDoubleClick={this.showEditor}>${product.price}</span>);
+            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice" onDoubleClick={this.showEditor}>${product.originPrice}</span>);
             let edit=this.props.edit;
             if(edit&&edit.idx===idx){
                 switch(edit.cate){
                     case 'title':
                         contentTitle=(
                             <form onSubmit={this.save}>
-                                <input type="text" defaultValue={product.title}/>
+                                <input type="text" defaultValue={product.bookName}/>
                             </form>
                             );
                         break;
@@ -58,12 +60,18 @@ export class Card extends React.Component{
                         break;
                 }
             }
+            let discount= Math.trunc((1-product.price/product.originPrice)*100);
             rows.push(
                 <div className="product-card" key={idx}>
                     <div className="product-image">
-                        <span className="discount-tag">{product.discount}% off</span>
-                        <img src={product.picture} className="product-thumb" alt=""/>
-                        <button className="card-btn">Add To Cart</button>
+                        <span className="discount-tag">{discount}% off</span>
+                        <img src={product.imageUrl} className="product-thumb" alt=""/>
+                        <Link to={{
+                            pathname: '/product',
+                            search: '?id=' + product.bookId}}
+                        >
+                        <button className="card-btn">See Details</button>
+                        </Link>
                     </div>
                     <div className="product-info">
                         {contentTitle}

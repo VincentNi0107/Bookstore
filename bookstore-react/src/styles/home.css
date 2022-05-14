@@ -48,7 +48,7 @@
   .product-card{
     flex: 0 0 auto;
     width: 250px;
-    height: 450px;
+    height: 500px;
     margin-right: 40px;
   }
   
@@ -86,6 +86,7 @@
     border: none;
     outline: none;
     background: #fff;
+    color: black;
     border-radius: 5px;
     transition: 0.5s;
     cursor: pointer;

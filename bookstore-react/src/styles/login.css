@@ -13,7 +13,6 @@
     border: none;
     outline: none;
     margin: 20px 0;
-    text-transform: capitalize;
     color: #383838;
     font-size: 14px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
@@ -53,6 +52,7 @@
     cursor: pointer;
     display: block;
     margin: 30px 0;
+    text-align: center;
 }
 ::placeholder{
     color: #383838;
@@ -109,6 +109,15 @@ label a{
     text-transform: capitalize;
     text-align: center;
     display: block;
+}
+.ant-btn-primary,.ant-btn-primary:focus{
+    background-color:#363636;
+    border-color:#363636;
+}
+
+.ant-btn-primary:hover {
+    background-color:#414040;
+    border-color:#414040;
 }
  /* .logo{
     height: 80px;

@@ -1,21 +1,21 @@
 import React from 'react';
 import '../styles/login.css'
 import darklogo from '../assets/dark-logo.png'
+import LoginForm from '../components/LoginForm';
+import {withRouter} from "react-router-dom";
 
-export class LoginView extends React.Component{
+class LoginView extends React.Component{
     render(){
         return(          
             <div className="signupcontainer">
-            <div className="signupCard">
-                <img src={darklogo} className="logo" alt=""/>
-                <div className="inputs">
-                    <input type="email" autoComplete="off" id="email" placeholder="email"/>
-                    <input type="password" autoComplete="off" id="password" placeholder="password"/>
-                    <button className="submitbtn">log in</button>
+                <div className="signupCard">
+                    <img src={darklogo} className="logo" alt=""/>
+                    <div className="inputs">
+                        <LoginForm />
+                    </div>
                 </div>
-                <a href="/signup" className="loginlink">Don't have an account? Create one</a>
-            </div>
             </div>
         );
     }
 }
+export default withRouter(LoginView);
