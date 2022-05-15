@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import lombok.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,28 +37,3 @@ public class OrderItem {
     @Column(name="price")
     private Double price;
 }
-//@Getter
-//@Setter
-//@Entity
-//@Table(name = "order_items")
-//@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "orderItemId")
-//public class OrderItem {
-//    private int orderItemId;
-//    private int orderId;
-//    private int userId;
-//    private int bookId;
-//    private int amount;
-//
-//    @Id
-//    @GeneratedValue(generator = "increment")
-//    @GenericGenerator(name = "increment", strategy = "increment")
-//    @Column(name = "order_item_id")
-//    public int getOrderItemId() {
-//        return orderItemId;
-//    }
-//    public void setOrderItemId(int orderItemId){
-//        this.orderItemId=orderItemId;
-//    }
-//
-//}

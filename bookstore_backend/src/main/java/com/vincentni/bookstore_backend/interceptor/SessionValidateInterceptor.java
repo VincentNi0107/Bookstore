@@ -5,7 +5,6 @@ import com.vincentni.bookstore_backend.utils.msgutils.MsgCode;
 import com.vincentni.bookstore_backend.utils.msgutils.MsgUtil;
 import com.vincentni.bookstore_backend.utils.sessionutils.SessionUtil;
 import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;

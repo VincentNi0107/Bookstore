@@ -1,7 +1,5 @@
 package com.vincentni.bookstore_backend.dao;
 
-import com.vincentni.bookstore_backend.dto.OrderInfo;
-import com.vincentni.bookstore_backend.entity.CartItem;
 import com.vincentni.bookstore_backend.entity.Order;
 import com.vincentni.bookstore_backend.entity.OrderItem;
 

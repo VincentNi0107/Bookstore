@@ -1,8 +1,6 @@
 package com.vincentni.bookstore_backend.daoimpl;
 
 import com.vincentni.bookstore_backend.dao.OrderDao;
-import com.vincentni.bookstore_backend.dto.OrderInfo;
-import com.vincentni.bookstore_backend.entity.CartItem;
 import com.vincentni.bookstore_backend.entity.Order;
 import com.vincentni.bookstore_backend.entity.OrderItem;
 import com.vincentni.bookstore_backend.repository.OrderItemRepository;
@@ -10,8 +8,6 @@ import com.vincentni.bookstore_backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

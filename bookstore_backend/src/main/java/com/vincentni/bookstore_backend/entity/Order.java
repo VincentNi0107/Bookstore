@@ -13,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
