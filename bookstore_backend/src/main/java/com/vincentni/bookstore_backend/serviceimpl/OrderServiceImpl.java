@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
             newOrderItem.setOrderId(newOrderId);
             orderDao.saveOrderItem(newOrderItem);
         }
-        cartDao.clearCartByUser(newOrderDTO.getUserId());
+        cartDao.deleteCartByUserId(newOrderDTO.getUserId());
         return convertOrder(tmpOrder);
     }
 

@@ -9,18 +9,20 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CartItemRepository extends JpaRepository<CartItem,Integer> {
-    @Query(value = "from CartItem where userId = :userId")
-    List<CartItem> getCartByUser(@Param("userId") Integer userId);
+    List<CartItem> getByUserId(Integer userId);
+    void deleteByUserId(Integer userId);
+    @Query(value = "from CartItem where userId = :userId and book.bookId = :bookId")
+    CartItem getCartItemByUserIdAndBookId(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 
-    @Query(value = "from CartItem where userId = :userId and bookId = :bookId")
-    CartItem getCartItem(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
-
-    @Transactional
-    @Modifying
-    @Query(value="update CartItem set amount=amount+1 where userId = :userId and bookId = :bookId")
-    void addAmount(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
-
-    @Transactional
-    @Modifying
-    @Query(value="delete from CartItem where userId = :userId")
-    void clearShoppingCartById(@Param("userId") Integer userId);}
+//    CartItem findCartItemByUserIdAndBook(Integer userid,Integer bookId);
+//
+//    @Transactional
+//    @Modifying
+//    @Query(value="update CartItem set amount=amount+1 where userId = :userId and bookId = :bookId")
+//    void addAmount(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
+//
+//    @Transactional
+//    @Modifying
+//    @Query(value="delete from CartItem where userId = :userId")
+//    void clearShoppingCartById(@Param("userId") Integer userId);
+}

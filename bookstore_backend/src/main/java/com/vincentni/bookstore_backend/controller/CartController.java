@@ -1,7 +1,7 @@
 package com.vincentni.bookstore_backend.controller;
 
 import com.vincentni.bookstore_backend.constant.Constant;
-import com.vincentni.bookstore_backend.dto.CartInfo;
+import com.vincentni.bookstore_backend.entity.CartItem;
 import com.vincentni.bookstore_backend.service.CartService;
 import com.vincentni.bookstore_backend.utils.msgutils.Msg;
 import com.vincentni.bookstore_backend.utils.msgutils.MsgCode;
@@ -22,6 +22,7 @@ public class CartController {
 
     @RequestMapping("/addCartItem")
     public Msg addCartItem(@RequestParam("bookId")int bookId){
+        System.out.println(bookId);
         JSONObject auth = SessionUtil.getAuth();
         System.out.println("addCartItem");
         if(auth != null){
@@ -34,11 +35,11 @@ public class CartController {
     }
 
     @RequestMapping("/getCart")
-    public List<CartInfo> getCartList(){
+    public List<CartItem> getCartList(){
         JSONObject auth = SessionUtil.getAuth();
         System.out.println("getCart");
         if(auth != null){
-            return cartService.getCartById(auth.getInt(Constant.USER_ID));
+            return cartService.getCartByUserId(auth.getInt(Constant.USER_ID));
         }
         else {
             return null;

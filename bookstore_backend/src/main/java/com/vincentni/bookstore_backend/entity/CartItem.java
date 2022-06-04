@@ -23,8 +23,9 @@ public class CartItem {
     @Column(name="user_id")
     private int userId;
 
-    @Column(name="book_id")
-    private int bookId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @Column(name="amount")
     private int amount;

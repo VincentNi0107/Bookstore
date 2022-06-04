@@ -4,10 +4,18 @@ import com.vincentni.bookstore_backend.entity.CartItem;
 import java.util.List;
 
 public interface CartDao {
-    void addCartItem(int userId,int bookId);
+//    void addCartItem(int userId,int bookId);
+//
+//    void clearCartByUser(int userId);
+//
+//    List<CartItem> getCartByUser(int userId);
+    CartItem getCartItemById(Integer cartItemId);
+    List<CartItem> getCartItemsByUserId(Integer userId);
 
-    void clearCartByUser(int userId);
+    CartItem getCartItemByUserIdAndBookId(Integer userId,Integer bookId);
+    void saveCartItem(CartItem cartItem);
+    void deleteCart(Integer itemId);
+    void deleteCartByUserId(Integer userId);
 
-    List<CartItem> getCartByUser(int userId);
 }
 

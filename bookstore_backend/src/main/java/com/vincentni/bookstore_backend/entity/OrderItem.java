@@ -13,10 +13,11 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order_items")
 @Setter
 @Getter
-@NoArgsConstructor
+@Table(name = "order_items")
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class OrderItem {
 
     @Id

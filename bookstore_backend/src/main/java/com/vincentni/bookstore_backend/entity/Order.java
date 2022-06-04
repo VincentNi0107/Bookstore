@@ -10,8 +10,9 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
 @Table(name = "orders")
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Order {
 
     @Id

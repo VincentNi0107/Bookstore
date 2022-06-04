@@ -8,6 +8,9 @@ import com.vincentni.bookstore_backend.entity.CartItem;
 import com.vincentni.bookstore_backend.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.ArrayList;
 @Service
@@ -18,27 +21,26 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private BookDao bookDao;
-
     @Override
     public void addCartItem(int userId, int bookId) {
-        cartDao.addCartItem(userId,bookId);
+        CartItem cartItem= cartDao.getCartItemByUserIdAndBookId(userId,bookId);
+        if(cartItem==null){
+            CartItem newCartItem = new CartItem();
+            newCartItem.setUserId(userId);
+            newCartItem.setAmount(1);
+            newCartItem.setBook(bookDao.findOne(bookId));
+            cartDao.saveCartItem(newCartItem);
+        }
+        else{
+            cartItem.setAmount(cartItem.getAmount()+1);
+            cartDao.saveCartItem(cartItem);
+        }
     }
 
     @Override
-    public List<CartInfo> getCartById(int userId) {
+    public List<CartItem> getCartByUserId(int userId) {
         List<CartInfo> cartList= new ArrayList<>();;
-        List<CartItem> cartItems=cartDao.getCartByUser(userId);
-        for(CartItem cartItem:cartItems){
-            Book book=bookDao.findOne(cartItem.getBookId());
-            CartInfo cartInfo = new CartInfo();
-            cartInfo.setAmount(cartItem.getAmount());
-            cartInfo.setBookId(cartItem.getBookId());
-            cartInfo.setAuthor(book.getAuthor());
-            cartInfo.setPrice(book.getPrice());
-            cartInfo.setImageUrl(book.getImageUrl());
-            cartInfo.setBookName(book.getBookName());
-            cartList.add(cartInfo);
-        }
-        return cartList;
+        return cartDao.getCartItemsByUserId(userId);
+
     }
 }
