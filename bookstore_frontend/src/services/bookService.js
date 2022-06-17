@@ -12,16 +12,19 @@ export const getBook = (bookId, callback) => {
     const url = `${config.apiUrl}/getBook`;
     postRequest_v2(url, data, callback);
 };
-export const getCart=(callback)=>{
-    const url = `${config.apiUrl}/getCart`;
-    postRequest(url, {}, callback);
-};
-export const addCartItem=(bookId,callback)=>{
+
+export const deleteBook = (bookId, callback) => {
     const data = {bookId: bookId};
-    const url = `${config.apiUrl}/addCartItem`;
+    const url = `${config.apiUrl}/deleteBook`;
     postRequest_v2(url, data, callback);
 };
-// export const getBook =(id,callback)=>{
-//     const url = `${config.apiUrl}/getBook?id=${id}`;
-//     getRequest(url,callback);
-// };
+
+export const addBook = (data,callback)=>{
+    const url = `${config.apiUrl}/addBook`;
+    postRequest(url, data, callback);
+};
+
+export const editBook = (data,callback)=>{
+    const url = `${config.apiUrl}/editBook`;
+    postRequest(url, data, callback);
+};

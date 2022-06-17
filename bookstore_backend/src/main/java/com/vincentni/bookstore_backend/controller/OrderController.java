@@ -3,6 +3,7 @@ package com.vincentni.bookstore_backend.controller;
 import com.vincentni.bookstore_backend.constant.Constant;
 import com.vincentni.bookstore_backend.dto.GetOrderDTO;
 import com.vincentni.bookstore_backend.dto.NewOrderDTO;
+import com.vincentni.bookstore_backend.entity.Order;
 import com.vincentni.bookstore_backend.service.OrderService;
 import com.vincentni.bookstore_backend.utils.sessionutils.SessionUtil;
 import net.sf.json.JSONObject;
@@ -22,18 +23,13 @@ public class OrderController {
 
     @RequestMapping("/getOrder")
     public List<GetOrderDTO> getOrder(){
-        JSONObject auth = SessionUtil.getAuth();
         System.out.println("getOrder");
-        if(auth != null){
-            return orderService.getOrderByUserId(auth.getInt(Constant.USER_ID));
-        }
-        else {
-            return null;
-        }
+        return orderService.getOrder();
+
     }
 
     @RequestMapping("/checkOut")
-    public GetOrderDTO checkout(@RequestBody NewOrderDTO newOrderDTO){
+    public Order checkout(@RequestBody NewOrderDTO newOrderDTO){
         JSONObject auth = SessionUtil.getAuth();
         System.out.println("checkOut");
         if(auth != null){

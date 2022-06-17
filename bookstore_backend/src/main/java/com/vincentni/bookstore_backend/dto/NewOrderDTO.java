@@ -9,7 +9,6 @@ public class NewOrderDTO {
     @Getter
     @Setter
     public static class OrderItem{
-//        Integer cartItemId;
         Integer bookId;
         Integer bookNumber;
     }

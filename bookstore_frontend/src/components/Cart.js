@@ -23,7 +23,7 @@ export class Cart extends React.Component{
         let items=[];
         for(let item of this.state.CartItem){
             items.push({
-                bookId:item.bookId,
+                bookId:item.book.bookId,
                 bookNumber:item.amount
             });
         }
@@ -48,15 +48,15 @@ export class Cart extends React.Component{
             const rows = [];
             let sumOfPrice=0;
             this.state.CartItem.map((item,idx) => {
-                sumOfPrice+=item.price*item.amount;
+                sumOfPrice+=item.book.price*item.amount;
                 rows.push(
                     <div className="Cart-Items">
                         <div className="image-box">
-                            <img src={item.imageUrl} className="cart-pic"/>
+                            <img src={item.book.imageUrl} className="cart-pic"/>
                         </div>
                         <div className="about">
-                            <h1 className="title">{item.bookName}</h1>
-                            <h3 className="subtitle">{item.author}</h3>
+                            <h1 className="title">{item.book.bookName}</h1>
+                            <h3 className="subtitle">{item.book.author}</h3>
                         </div>
                         <div className="counter">
                             <div className="cartbtn">+</div>
@@ -64,7 +64,7 @@ export class Cart extends React.Component{
                             <div className="cartbtn">-</div>
                         </div>
                         <div className="prices">
-                            <div className="amount">${(item.price*item.amount).toFixed(2)}</div>
+                            <div className="amount">${(item.book.price*item.amount/100).toFixed(2)}</div>
                             <div className="remove"><u>Remove</u></div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ export class Cart extends React.Component{
                                 <div className="Subtotal">Sub-Total</div>
                                 <div className="items">{this.state.CartItem.length} items</div>
                             </div>
-                            <div className="total-amount">${sumOfPrice.toFixed(2)}</div>
+                            <div className="total-amount">${(sumOfPrice/100).toFixed(2)}</div>
                         </div>
                         <button className="button" onClick={this.checkOut}>Checkout</button>
                     </div>
@@ -94,12 +94,12 @@ export class Cart extends React.Component{
         else{
             let totalPrice=0;
             let totalNum=0;
-            this.state.OrderInfo.orderItemList.map((item,idx) => {
-                totalPrice+=item.price*item.bookNumber;
+            this.state.OrderInfo.orderItem.map((item,idx) => {
+                totalPrice+=item.book.price*item.bookNumber;
                 totalNum+=item.bookNumber;
             });
             let title="Successfully Purchased "+totalNum+" Books";
-            let subTitle="Order time: "+this.state.OrderInfo.time+"    Total cost: $"+totalPrice.toFixed(2);
+            let subTitle="Order time: "+this.state.OrderInfo.time+"    Total cost: $"+(totalPrice/100).toFixed(2);
             cart=(
                 <Result
                     status="success"

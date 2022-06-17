@@ -1,22 +1,19 @@
 import React from 'react';
-import { List , Table } from 'antd';
+import { List , Table , DatePicker , Input } from 'antd';
 import * as orderService from '../services/orderService';
 
-const data = [
-    {
-      time: '2022-5-15 13:00:11',
-      bookName: 'Life Force',
-      amount: 2,
-      totalPrice:"$20.00",
-    },
-    
-  ];
+const {Search} = Input;
+const {RangePicker} = DatePicker;
   
 export class OrderList extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            OrderItems:[],
+            orderItems:[],
+            showOrders:[],
+            filterText: '',
+            startTime:'',
+            endTime:''
         };
     }
     componentDidMount() {
@@ -25,24 +22,64 @@ export class OrderList extends React.Component {
             for (let order of data){
                 let totalPrice=0;
                 let totalNum=0;
-                for(let book of order.orderItemList){
-                    totalPrice+=book.bookNumber*book.price;
-                    totalNum+=book.bookNumber;
-                    book.price='$'+book.price.toFixed(2);
+                for(let item of order.orderItemList){
+                    totalPrice+=item.bookNumber*item.price;
+                    totalNum+=item.bookNumber;
+                    item.price='$'+(item.price/100).toFixed(2);
                 }
                 orderItemList.push({
                     orderDate:order.time.substring(0,10),
                     orderTime:order.time.substring(11,19),
-                    buyer:order.userName,
+                    buyer:order.username,
                     bookNum:totalNum,
-                    cost:totalPrice.toFixed(2),
+                    cost:totalPrice,
                     bookList:order.orderItemList
                     });
             }
-           this.setState({OrderItems:orderItemList.reverse()});
+            this.setState({
+                orderItems:orderItemList.reverse(),
+                showOrders:orderItemList
+            });
         };
         orderService.getOrder(callback);
+    };
+
+    searchChange = ({target: {value}}) => {
+        this.setState({filterText: value});
+        setTimeout(() => this.filterList(), 100);
     }
+
+    filterList = () => {
+        let arr = [];
+        let list = this.state.orderItems;
+        for (let orderitem of list) {
+            let time = new Date(Date.parse(orderitem.orderDate));
+            let startTime = new Date(Date.parse(this.state.startTime));
+            let endTime = new Date(Date.parse(this.state.endTime));
+            if((this.state.startTime===''|| time >= startTime) && (this.state.endTime==='' || time <= endTime)){
+                for(let book of orderitem.bookList){
+                    if(book.bookName.toLowerCase().indexOf(this.state.filterText.toLowerCase()) != -1){
+                        arr.push(orderitem);
+                        break;
+                    }
+                }
+            }
+        }                
+        this.setState(
+            {showOrders: arr}
+        );
+    }
+
+    timeChange = (_, dateString) => {      
+        const startTime = new Date(Date.parse(dateString[0]));
+        const endTime = new Date(Date.parse(dateString[1]));
+        this.setState({
+            startTime:startTime,
+            endTime:endTime
+        });
+        setTimeout(() => this.filterList(), 100);
+    }
+
     render(){
         const columns = [
             {
@@ -64,8 +101,16 @@ export class OrderList extends React.Component {
         ];
         return(
             <div>
+                <br/>
+                <br/>
+                <Search value={this.state.searchValue} placeholder="Search for Orders by Book Name" onChange={this.searchChange}/>
+                <br/>
+                <br/>
+                <RangePicker onChange={this.timeChange}/>
+                <br/>
+                <br/>
                 <List
-                    dataSource={this.state.OrderItems}
+                    dataSource={this.state.showOrders}
                     pagination={{
                         onChange: page => {
                           console.log(page);
@@ -76,7 +121,7 @@ export class OrderList extends React.Component {
                         <List.Item>
                             <List.Item.Meta
                                 title={`Date:${item.orderDate}  Time: ${item.orderTime}`}
-                                description={`${item.bookNum} Books Ordered by ${item.buyer} , Total Cost $${item.cost}`}
+                                description={`${item.bookNum} Books Ordered by ${item.buyer} , Total Cost $${(item.cost/100).toFixed(2)}`}
                             />
                             <Table columns={columns} dataSource={item.bookList} />
                         </List.Item>

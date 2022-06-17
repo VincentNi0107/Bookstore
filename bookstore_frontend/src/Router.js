@@ -9,6 +9,10 @@ import { SignupView } from './view/SignupView';
 import OrderView from './view/OrderView';
 import CartView from './view/CartView';
 import ProductView from './view/ProductView';
+import UserManageView from './view/UserManageView';
+import BookSalesView from './view/BookSalesView';
+import UserSalesView from './view/UserSalesView';
+import BookManageView from './view/BookManageView';
 import PrivateRoute from './PrivateRoute'
 import LoginRoute from  './LoginRoute'
 import {history} from "./utils/history";
@@ -32,6 +36,10 @@ class BasicRoute extends React.Component{
                     <PrivateRoute exact path="/product" component={ProductView}/>
                     <PrivateRoute exact path="/order" component={OrderView}/>
                     <PrivateRoute exact path="/cart" component={CartView}/>
+                    <PrivateRoute exact path="/booksales" component={BookSalesView}/>
+                    <PrivateRoute exact path="/usersales" component={UserSalesView}/>
+                    <PrivateRoute exact path="/usermanage" component={UserManageView}/>
+                    <PrivateRoute exact path="/bookmanage" component={BookManageView}/>
                     <LoginRoute exact path="/login" component={LoginView}/>
                     {/* <Route path="/signup" component={SignupView}/> */}
                     <PrivateRoute exact path="/search" component={SearchView}/>

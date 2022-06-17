@@ -23,8 +23,8 @@ export class Card extends React.Component{
             }
             let contentTitle=(<h2 className="product-brand" onDoubleClick={this.showEditor} data-cate='title' data-idx={idx}>{product.bookName}</h2>);
             let contentAuthor=(<p className="product-short-des" data-idx={idx} data-cate="author" onDoubleClick={this.showEditor}>{product.author}</p>);
-            let contentPrice=(<span className="price" data-idx={idx} data-cate="price" onDoubleClick={this.showEditor}>${product.price}</span>);
-            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice" onDoubleClick={this.showEditor}>${product.originPrice}</span>);
+            let contentPrice=(<span className="price" data-idx={idx} data-cate="price" onDoubleClick={this.showEditor}>${(product.price/100).toFixed(2)}</span>);
+            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice" onDoubleClick={this.showEditor}>${(product.originPrice/100).toFixed(2)}</span>);
             let edit=this.props.edit;
             if(edit&&edit.idx===idx){
                 switch(edit.cate){
@@ -45,14 +45,14 @@ export class Card extends React.Component{
                     case 'price':
                         contentPrice=(
                             <form onSubmit={this.save}>
-                                <input type="text" defaultValue={product.price}/>
+                                <input type="text" defaultValue={(product.price/100).toFixed(2)}/>
                             </form>
                         );
                         break;
                     case 'originPrice':
                         contentOP=(
                             <form onSubmit={this.save}>
-                                <input type="text" defaultValue={product.originPrice}/>
+                                <input type="text" defaultValue={(product.originPrice/100).toFixed(2)}/>
                             </form>
                         );
                         break;

@@ -87,8 +87,8 @@ class ProductView extends React.Component{
                         <br/>
                         <h2 className="product-brand">{this.state.bookInfo.bookName}</h2>
                         <p className="product-short-des">by {this.state.bookInfo.author}</p>
-                        <span className="product-price">${this.state.bookInfo.price}</span>
-                        <span className="product-actual-price">${this.state.bookInfo.originPrice}</span>
+                        <span className="product-price">${(this.state.bookInfo.price/100).toFixed(2)}</span>
+                        <span className="product-actual-price">${(this.state.bookInfo.originPrice/100).toFixed(2)}</span>
                         <span className="product-discount">( {discount}% off )</span>
                 
                         <p className="product-detail-info">ISBN: {this.state.bookInfo.isbn}</p>

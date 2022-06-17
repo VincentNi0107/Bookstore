@@ -14,7 +14,19 @@ public class MsgUtil {
     public static final String ERROR_MSG = "错误！";
     public static final String LOGIN_USER_ERROR_MSG = "用户名或密码错误，请重新输入！";
     public static final String NOT_LOGGED_IN_ERROR_MSG = "登录失效，请重新登录！";
+    public static  final String SUCCESS_BAN = "Successfully Banned!";
+    public static  final String ERROR_BAN = "Ban Error!";
+    public static  final String SUCCESS_UNBAN = "Successfully Unbanned!";
+    public static  final String ERROR_UNBAN = "Unban Error!";
 
+    public static  final String SUCCESS_ADDBOOK = "Add Book Successfully!";
+    public static  final String ERROR_ADDBOOK = "Add Book Error!";
+
+    public static  final String SUCCESS_DELETEBOOK = "Delete Book Successfully!";
+    public static  final String ERROR_DELETEBOOK = "Delete Book Error!";
+
+    public static  final String SUCCESS_EDITBOOK = "Edit Book Successfully!";
+    public static  final String ERROR_EDITBOOK = "Edit Book Error!";
 
 
     public static Msg makeMsg(MsgCode code, JSONObject data){

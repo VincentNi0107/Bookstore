@@ -67,7 +67,10 @@ export class SearchNav extends React.Component{
                 <li className="link-item"><Link to={"/search"} className="link">Books</Link></li>
                 <li className="link-item"><Link to={"/order"} className="link">Orders</Link></li>
                 <li className="link-item"><Link to={"/cart"} className="link">Cart</Link></li>
-                {/* <li className="link-item"><a href="/product" className="link">Product</a></li> */}
+                <li className="link-item"><Link to={"/usermanage"} className="link">UserManage</Link></li>
+                <li className="link-item"><Link to={"/bookmanage"} className="link">BookManage</Link></li>
+                <li className="link-item"><Link to={"/booksales"} className="link">BookSales</Link></li>
+                <li className="link-item"><Link to={"/usersales"} className="link">UserSales</Link></li>
                 </ul>
             </nav>
 

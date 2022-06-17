@@ -7,4 +7,6 @@ import java.util.List;
 public interface BookDao {
     Book findOne(Integer id);
     List<Book> getBooks();
+    void saveBook(Book book);
+    void delete(Integer bookId);
 }

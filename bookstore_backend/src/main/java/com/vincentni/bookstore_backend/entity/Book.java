@@ -20,7 +20,7 @@ public class Book {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "book_id")
-    private int bookId;
+    private Integer bookId;
 
     @Column(name="isbn")
     private String isbn;
@@ -32,13 +32,13 @@ public class Book {
     private String author;
 
     @Column(name="origin_price")
-    private Double originPrice;
+    private Integer originPrice;
 
     @Column(name="price")
-    private Double price;
+    private Integer price;
 
     @Column(name="inventory")
-    private int inventory;
+    private Integer inventory;
 
     @Column(name="description")
     private String description;

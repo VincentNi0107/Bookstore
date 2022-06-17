@@ -7,10 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 
 @Entity
 @Setter
@@ -26,15 +24,17 @@ public class OrderItem {
     @Column(name="order_item_id")
     private Integer id;
 
-    @Column(name="order_id")
-    private Integer orderId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
-    @Column(name = "book_id")
-    private Integer bookId;
+    @ManyToOne(targetEntity = Order.class , fetch=FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    private Order order;
 
     @Column(name="amount")
     private Integer bookNumber;
 
     @Column(name="price")
-    private Double price;
+    private Integer price;
 }

@@ -3,6 +3,23 @@ import {message} from 'antd';
 import config from '../config.json'
 import {history} from "../utils/history";
 
+export const getUsers = (callback) => {
+    const url = `${config.apiUrl}/getUserList`;
+    postRequest(url, {}, callback);
+};
+
+export const ban = (userId, callback) => {
+    const data = {userId: userId};
+    const url = `${config.apiUrl}/ban`;
+    postRequest_v2(url, data, callback);
+};
+
+export const unban = (userId, callback) => {
+    const data = {userId: userId};
+    const url = `${config.apiUrl}/unban`;
+    postRequest_v2(url, data, callback);
+};
+
 export const login = (data) => {
     const url = `${config.apiUrl}/login`;
     const callback = (data) => {

@@ -21,10 +21,15 @@ public class Order {
     @Column(name="order_id")
     private Integer id;
 
-    @Column(name="user_id")
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name="order_date")
     private Timestamp time;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name="order_id")
+    private List<OrderItem> orderItem;
 
 }

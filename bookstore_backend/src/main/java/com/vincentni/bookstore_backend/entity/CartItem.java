@@ -18,16 +18,16 @@ public class CartItem {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "cart_item_id")
-    private int cartItemId;
+    private Integer cartItemId;
 
     @Column(name="user_id")
-    private int userId;
+    private Integer userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 
     @Column(name="amount")
-    private int amount;
+    private Integer amount;
 
 }

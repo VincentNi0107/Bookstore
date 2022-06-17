@@ -2,17 +2,12 @@ package com.vincentni.bookstore_backend.serviceimpl;
 
 import com.vincentni.bookstore_backend.dao.BookDao;
 import com.vincentni.bookstore_backend.dao.CartDao;
-import com.vincentni.bookstore_backend.dto.CartInfo;
-import com.vincentni.bookstore_backend.entity.Book;
 import com.vincentni.bookstore_backend.entity.CartItem;
 import com.vincentni.bookstore_backend.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.ArrayList;
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -39,7 +34,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> getCartByUserId(int userId) {
-        List<CartInfo> cartList= new ArrayList<>();;
         return cartDao.getCartItemsByUserId(userId);
 
     }

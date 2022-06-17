@@ -1,7 +1,13 @@
 package com.vincentni.bookstore_backend.dto;
-import lombok.*;
+
+import com.vincentni.bookstore_backend.entity.Order;
+import com.vincentni.bookstore_backend.entity.OrderItem;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -9,12 +15,27 @@ import java.util.List;
 public class GetOrderDTO {
     @Getter
     @Setter
-    public static class OrderItem{
+    @AllArgsConstructor
+    public static class OrderItems{
+        Integer bookId;
         String bookName;
+        Integer price;
         Integer bookNumber;
-        Double price;
     }
-    private String userName;
+
     private Timestamp time;
-    private List<GetOrderDTO.OrderItem> orderItemList;
+    private Integer userId;
+    private String username;
+    private List<GetOrderDTO.OrderItems> orderItemList;
+    public GetOrderDTO(Order order){
+        this.userId=order.getUser().getUserId();
+        this.username=order.getUser().getUsername();
+        this.time=order.getTime();
+        orderItemList=new LinkedList<>();
+        for(OrderItem orderItem:order.getOrderItem()){
+            orderItemList.add(new GetOrderDTO.OrderItems(orderItem.getBook().getBookId(),orderItem.getBook().getBookName(),orderItem.getPrice(),orderItem.getBookNumber()));
+        }
+
+
+    }
 }
