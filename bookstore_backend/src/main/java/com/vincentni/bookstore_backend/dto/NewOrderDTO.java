@@ -12,7 +12,5 @@ public class NewOrderDTO {
         Integer bookId;
         Integer bookNumber;
     }
-
-    private Integer userId;
     private List<OrderItem> orderItemList;
 }

@@ -7,6 +7,7 @@ import com.vincentni.bookstore_backend.dao.OrderDao;
 import com.vincentni.bookstore_backend.dao.UserDao;
 import com.vincentni.bookstore_backend.dto.GetOrderDTO;
 import com.vincentni.bookstore_backend.dto.NewOrderDTO;
+import com.vincentni.bookstore_backend.entity.Book;
 import com.vincentni.bookstore_backend.entity.Order;
 import com.vincentni.bookstore_backend.entity.OrderItem;
 import com.vincentni.bookstore_backend.service.OrderService;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -37,7 +40,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<GetOrderDTO> getOrder() {
         JSONObject auth = SessionUtil.getAuth();
-        System.out.println("getOrder");
         if(auth != null){
             List<Order> orderList;
             if(auth.getString(Constant.USER_TYPE).equals("admin")){
@@ -60,22 +62,34 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Order addOrder(NewOrderDTO newOrderDTO) {
-        Order newOrder = new Order();
-        Timestamp orderTime = new Timestamp(System.currentTimeMillis());
-        newOrder.setTime(orderTime);
-        newOrder.setUser(userDao.getUserById(newOrderDTO.getUserId()));
-        List<OrderItem> orderItemList = new LinkedList<>();
-        for (NewOrderDTO.OrderItem orderItem: newOrderDTO.getOrderItemList()) {
-            OrderItem newOrderItem = new OrderItem();
-            newOrderItem.setBook(bookDao.findOne(orderItem.getBookId()));
-            newOrderItem.setBookNumber(orderItem.getBookNumber());
-            newOrderItem.setPrice(bookDao.findOne(orderItem.getBookId()).getPrice());
-            newOrderItem.setOrder(newOrder);
-            orderItemList.add(newOrderItem);
+        JSONObject auth = SessionUtil.getAuth();
+        if(auth != null){
+            Order newOrder = new Order();
+            Timestamp orderTime = new Timestamp(System.currentTimeMillis());
+            newOrder.setTime(orderTime);
+            newOrder.setUser(userDao.getUserById(auth.getInt(Constant.USER_ID)));
+            List<OrderItem> orderItemList = new LinkedList<>();
+            for (NewOrderDTO.OrderItem orderItem: newOrderDTO.getOrderItemList()) {
+                OrderItem newOrderItem = new OrderItem();
+                Book book = bookDao.findOne(orderItem.getBookId());
+                int newInventory=book.getInventory()-orderItem.getBookNumber();
+                if(newInventory < 0) continue;
+                book.setInventory(newInventory);
+                newOrderItem.setBook(book);
+                newOrderItem.setBookNumber(orderItem.getBookNumber());
+                newOrderItem.setPrice(book.getPrice());
+                newOrderItem.setOrder(newOrder);
+                orderItemList.add(newOrderItem);
+                bookDao.saveBook(book);
+            }
+            newOrder.setOrderItem(orderItemList);
+            cartDao.deleteCartByUserId(auth.getInt(Constant.USER_ID));
+            if(orderItemList.size() == 0) return newOrder;
+            return orderDao.saveOrder(newOrder);
         }
-        newOrder.setOrderItem(orderItemList);
-        cartDao.deleteCartByUserId(newOrderDTO.getUserId());
-        return orderDao.saveOrder(newOrder);
+        else {
+            return null;
+        }
     }
 
 

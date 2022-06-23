@@ -18,7 +18,7 @@ public class SessionValidateInterceptor extends HandlerInterceptorAdapter {
 
         boolean status = SessionUtil.checkAuth();
         if(!status){
-            System.out.println("Failed");
+            System.out.println("Check Auth Failed");
             Msg msg = MsgUtil.makeMsg(MsgCode.NOT_LOGGED_IN_ERROR);
             sendJsonBack(response, msg);
             return false;

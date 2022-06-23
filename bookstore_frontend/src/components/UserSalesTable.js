@@ -11,6 +11,7 @@ export class UserSalesTable extends React.Component{
         this.state={
             orderList:[],
             userList:[],
+            showUserList:[],
         };
     }
     componentDidMount() {
@@ -58,8 +59,10 @@ export class UserSalesTable extends React.Component{
             for(let order of this.state.orderList){
                 userList[order.userId-1].cost+=order.price;
             }
+            let showUserList=JSON.parse(JSON.stringify(userList));
             this.setState({
-                userList: userList.sort(function(a, b){return b.cost - a.cost})
+                userList: userList,
+                showUserList:showUserList.sort(function(a, b){return b.cost - a.cost}),
             });
         };
         getUsers(callback);
@@ -75,7 +78,7 @@ export class UserSalesTable extends React.Component{
                 arr.push(order);
             }
         }
-        let newUserList=this.state.userList;
+        let newUserList=JSON.parse(JSON.stringify(this.state.userList));
         for(let user of newUserList){
             user.cost=0;
         }
@@ -83,13 +86,13 @@ export class UserSalesTable extends React.Component{
             newUserList[order.userId-1].cost+=order.price;
         }
         this.setState({
-            userList:newUserList.sort(function(a, b){return b.cost - a.cost}),
+            showUserList:newUserList.sort(function(a, b){return b.cost - a.cost}),
         });
     }
 
     render(){
         const rows = [];
-            this.state.userList.map((item,idx) => {
+            this.state.showUserList.map((item,idx) => {
                 rows.push(
                     <div>
                         <br/>

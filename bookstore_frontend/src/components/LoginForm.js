@@ -39,7 +39,7 @@ class LoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="submitbtn">
                         Log in
                     </Button>
-                    <Link to={"/signup"} className="loginlink">Don't have an account? Create one</Link>
+                    <Link to={"/register"} className="loginlink">Don't have an account? Create one</Link>
                 </Form.Item>
             </Form>
         );

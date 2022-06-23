@@ -6,18 +6,6 @@ import '../styles/home.css';
 import {getBooks} from "../services/bookService";
 import {withRouter} from "react-router-dom";
 
-const PRODUCTS = [
-    {title: 'Life Force', price: '$20', author: 'Tony Robbins',picture:require('../assets/card1-1.png'),originPrice:'$40',discount:'50'},
-    {title: 'Chicka Chicka Boom Boom', price: '$10', author: 'Bill Martin Jr.',picture:require('../assets/card2-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-    {title: 'The Handmaid\'s Tale', price: '$10', author: 'Margaret Atwood',picture:require('../assets/card3-1.png'),originPrice:'$15',discount:'33'},
-
-];
 class HomeView extends React.Component{
     constructor(props){
         super(props);

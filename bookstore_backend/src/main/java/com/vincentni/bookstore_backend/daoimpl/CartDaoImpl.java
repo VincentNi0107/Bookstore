@@ -35,8 +35,8 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public void deleteCart(Integer itemId) {
-        cartItemRepository.deleteAll();
+    public void deleteCartItemById(Integer cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
     }
 
     @Override
@@ -44,29 +44,5 @@ public class CartDaoImpl implements CartDao {
         cartItemRepository.deleteByUserId(userId);
     }
 
-//    @Override
-//    public void addCartItem(int userId, int bookId) {
-//        CartItem cartItem=cartItemRepository.getCartItem(userId,bookId);
-//        if(cartItem==null){
-//            cartItem=new CartItem();
-//            cartItem.setUserId(userId);
-//            cartItem.setBookId(bookId);
-//            cartItem.setAmount(1);
-//            cartItemRepository.save(cartItem);
-//        }
-//        else {
-//            cartItemRepository.addAmount(userId,bookId);
-//        }
-//    }
-//
-//    @Override
-//    public void clearCartByUser(int userId) {
-//        cartItemRepository.clearShoppingCartById(userId);
-//    }
-//
-//    @Override
-//    public List<CartItem> getCartByUser(int userId) {
-//        return cartItemRepository.getCartByUser(userId);
-//    }
 
 }

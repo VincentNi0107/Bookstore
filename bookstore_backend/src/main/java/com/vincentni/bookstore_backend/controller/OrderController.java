@@ -25,21 +25,11 @@ public class OrderController {
     public List<GetOrderDTO> getOrder(){
         System.out.println("getOrder");
         return orderService.getOrder();
-
     }
 
     @RequestMapping("/checkOut")
     public Order checkout(@RequestBody NewOrderDTO newOrderDTO){
-        JSONObject auth = SessionUtil.getAuth();
         System.out.println("checkOut");
-        if(auth != null){
-            newOrderDTO.setUserId(Objects.requireNonNull(SessionUtil.getAuth()).getInt(Constant.USER_ID));
-            return orderService.addOrder(newOrderDTO);
-        }
-        else {
-            return null;
-        }
-
+        return orderService.addOrder(newOrderDTO);
     }
-
 }

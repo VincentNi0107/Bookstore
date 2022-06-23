@@ -13,13 +13,62 @@ export class Cart extends React.Component{
         };
     }
     componentDidMount() {
+        this.fetchCart();
+    }
+
+    fetchCart = () => {
         const callback =  (data) => {
-           this.setState({CartItem:data});
+            this.setState({CartItem:data});
         };
         cartService.getCart(callback);
     }
+    
+    deleteItem = (e) => {
+        const callback = (data) => {
+            console.log(data);
+            if(data.status<0){
+                message.error(data.msg);
+            }
+        };
+        console.log(e.target.dataset);
+        cartService.deleteCartItem(e.target.dataset.bookid,callback);
+        setTimeout(() => this.fetchCart(), 100);
+    }
 
-    checkOut = () =>{
+    decreaseAmount = (e) => {
+        const callback = (data) => {
+            console.log(data);
+            if(data.status<0){
+                message.error(data.msg);
+            }
+        };
+        cartService.decreaseCartItem(e.target.dataset.bookid,callback);
+        setTimeout(() => this.fetchCart(), 100);
+    }
+
+    addAmount = (e) => {
+        const callback = (data) => {
+            console.log(data);
+            if(data.status<0){
+                message.error(data.msg);
+            }
+        };
+        cartService.addCartItem(e.target.dataset.bookid,callback);
+        setTimeout(() => this.fetchCart(), 100);
+    }
+
+    deleteAll = () => {
+        const callback = (data) => {
+            console.log(data);
+            if(data.status<0){
+                message.error(data.msg);
+            }
+        };
+        cartService.deleteAllCart(callback);
+        setTimeout(() => this.fetchCart(), 100);
+    }
+
+    checkOut = () => {
         let items=[];
         for(let item of this.state.CartItem){
             items.push({
@@ -31,8 +80,13 @@ export class Cart extends React.Component{
             orderItemList: items
         };
         const callback =  (data) => {
-            this.setState({OrderInfo:data,Success:1,CartItem:[]});
-            message.success("Order success!");
+            if(data.orderItem.length>0){
+                this.setState({OrderInfo:data,Success:1,CartItem:[]});
+                message.success("Order success!");
+            }
+            else{
+                message.error("All Books out of Inventory!");
+            }
         };
         if(items.length===0){
             message.error("The Cart is empty!");
@@ -59,13 +113,13 @@ export class Cart extends React.Component{
                             <h3 className="subtitle">{item.book.author}</h3>
                         </div>
                         <div className="counter">
-                            <div className="cartbtn">+</div>
+                            <div className="cartbtn" data-bookId={item.book.bookId} onClick={this.addAmount}>+</div>
                             <div className="count">{item.amount}</div>
-                            <div className="cartbtn">-</div>
+                            <div className="cartbtn" data-bookId={item.book.bookId} onClick={this.decreaseAmount}>-</div>
                         </div>
                         <div className="prices">
                             <div className="amount">${(item.book.price*item.amount/100).toFixed(2)}</div>
-                            <div className="remove"><u>Remove</u></div>
+                            <div className="remove"><u data-bookId={item.book.bookId} onClick={this.deleteItem}>Remove</u></div>
                         </div>
                     </div>
                 );
@@ -74,7 +128,7 @@ export class Cart extends React.Component{
                 <div>
                     <div className="Header">
                         <h3 className="Heading">Shopping Cart</h3>
-                        <h5 className="Action">Remove all</h5>
+                        <h5 className="Action" onClick={this.deleteAll}>Remove all</h5>
                     </div>
                     {rows}
                     <hr/> 

@@ -22,27 +22,31 @@ public class CartController {
 
     @RequestMapping("/addCartItem")
     public Msg addCartItem(@RequestParam("bookId")int bookId){
-        System.out.println(bookId);
-        JSONObject auth = SessionUtil.getAuth();
         System.out.println("addCartItem");
-        if(auth != null){
-            cartService.addCartItem(auth.getInt(Constant.USER_ID),bookId);
-            return MsgUtil.makeMsg(MsgUtil.SUCCESS,MsgUtil.SUCCESS_MSG);
-        }
-        else {
-            return MsgUtil.makeMsg(MsgCode.NOT_LOGGED_IN_ERROR);
-        }
+        return cartService.addCartItem(bookId);
     }
 
     @RequestMapping("/getCart")
     public List<CartItem> getCartList(){
-        JSONObject auth = SessionUtil.getAuth();
         System.out.println("getCart");
-        if(auth != null){
-            return cartService.getCartByUserId(auth.getInt(Constant.USER_ID));
-        }
-        else {
-            return null;
-        }
+        return cartService.getCartByUserId();
+    }
+
+    @RequestMapping("/decreaseCartAmount")
+    public void decreaseCartAmount(@RequestParam("bookId")int bookId){
+        System.out.println("decreaseCartAmount");
+        cartService.decreaseAmount(bookId);
+    }
+
+    @RequestMapping("/deleteCartItem")
+    public void deleteCartItem(@RequestParam("bookId")int bookId){
+        System.out.println("deleteCartItem");
+        cartService.deleteCartItem(bookId);
+    }
+
+    @RequestMapping("/deleteAllCartItem")
+    public void deleteAllCartItem(){
+        System.out.println("deleteAllCartItem");
+        cartService.deleteAll();
     }
 }

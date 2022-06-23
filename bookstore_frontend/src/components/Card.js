@@ -1,65 +1,33 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+import {getBooks} from "../services/bookService";
 
 export class Card extends React.Component{
     constructor(props){
         super(props);
-        this.showEditor=this.showEditor.bind(this);
-        this.save=this.save.bind(this);
+        this.state={
+            products:[]
+        };
     }
-    showEditor(e){
-        this.props.onEdit(e.target.dataset);
+
+    componentDidMount() {
+        const callback =  (data) => {
+           this.setState({products:data});
+        };
+        getBooks({"search":null}, callback);
     }
-    save(e){
-        e.preventDefault();
-        this.props.onSave(e.target.firstChild);
-    }
+
     render(){
         const rows = [];
         const filterText = this.props.filterText;
-        this.props.products.map((product,idx) => {
+        this.state.products.map((product,idx) => {
             if (product.bookName.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
                 return;
             }
-            let contentTitle=(<h2 className="product-brand" onDoubleClick={this.showEditor} data-cate='title' data-idx={idx}>{product.bookName}</h2>);
-            let contentAuthor=(<p className="product-short-des" data-idx={idx} data-cate="author" onDoubleClick={this.showEditor}>{product.author}</p>);
-            let contentPrice=(<span className="price" data-idx={idx} data-cate="price" onDoubleClick={this.showEditor}>${(product.price/100).toFixed(2)}</span>);
-            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice" onDoubleClick={this.showEditor}>${(product.originPrice/100).toFixed(2)}</span>);
-            let edit=this.props.edit;
-            if(edit&&edit.idx===idx){
-                switch(edit.cate){
-                    case 'title':
-                        contentTitle=(
-                            <form onSubmit={this.save}>
-                                <input type="text" defaultValue={product.bookName}/>
-                            </form>
-                            );
-                        break;
-                    case 'author':
-                        contentAuthor=(
-                            <form onSubmit={this.save}>
-                                <input type="text" defaultValue={product.author}/>
-                            </form>
-                            );
-                        break;
-                    case 'price':
-                        contentPrice=(
-                            <form onSubmit={this.save}>
-                                <input type="text" defaultValue={(product.price/100).toFixed(2)}/>
-                            </form>
-                        );
-                        break;
-                    case 'originPrice':
-                        contentOP=(
-                            <form onSubmit={this.save}>
-                                <input type="text" defaultValue={(product.originPrice/100).toFixed(2)}/>
-                            </form>
-                        );
-                        break;
-                    default:
-                        break;
-                }
-            }
+            let contentTitle=(<h2 className="product-brand" data-cate='title' data-idx={idx}>{product.bookName}</h2>);
+            let contentAuthor=(<p className="product-short-des" data-idx={idx} data-cate="author">{product.author}</p>);
+            let contentPrice=(<span className="price" data-idx={idx} data-cate="price">${(product.price/100).toFixed(2)}</span>);
+            let contentOP=(<span className="actual-price" data-idx={idx} data-cate="originPrice">${(product.originPrice/100).toFixed(2)}</span>);
             let discount= Math.trunc((1-product.price/product.originPrice)*100);
             rows.push(
                 <div className="product-card" key={idx}>

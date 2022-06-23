@@ -11,6 +11,7 @@ export class BookSalesTable extends React.Component {
         this.state={
             orderItems:[],
             bookList:[],
+            showBookList:[],
             totalPrice:0,
             totalNumber:0,
         };
@@ -22,7 +23,7 @@ export class BookSalesTable extends React.Component {
 
     fetchBook = () => {
         const callback =  (data) => {
-            let bookList=new Array(data.length)
+            let bookList = new Array(data.length);
             let totalPrice=0;
             let totalNumber=0;
             for(let book of data){
@@ -38,8 +39,10 @@ export class BookSalesTable extends React.Component {
                 totalPrice+=orderitem.bookNumber*orderitem.price;
                 totalNumber+=orderitem.bookNumber;
             }
+            let showBookList=JSON.parse(JSON.stringify(bookList));//deep copy!!!
             this.setState({
-                bookList:bookList.sort(function(a, b){return b.bookNumber - a.bookNumber}),
+                bookList:bookList,
+                showBookList:showBookList.sort(function(a, b){return b.bookNumber - a.bookNumber}),
                 totalNumber:totalNumber,
                 totalPrice:totalPrice
             });
@@ -78,7 +81,7 @@ export class BookSalesTable extends React.Component {
                 arr.push(orderitem);
             }
         }
-        let newBookList=this.state.bookList;
+        let newBookList=JSON.parse(JSON.stringify(this.state.bookList));
         let totalPrice=0;
         let totalNumber=0;
         for(let book of newBookList){
@@ -91,7 +94,7 @@ export class BookSalesTable extends React.Component {
         }
         newBookList.sort(function(a, b){return  b.bookNumber - a.bookNumber});
         this.setState({
-            bookList:newBookList,
+            showBookList:newBookList,
             totalNumber:totalNumber,
             totalPrice:totalPrice
         });
@@ -99,7 +102,7 @@ export class BookSalesTable extends React.Component {
 
     render(){
         const rows = [];
-            this.state.bookList.map((item,idx) => {
+            this.state.showBookList.map((item,idx) => {
                 rows.push(
                     <div>
                         <br/>

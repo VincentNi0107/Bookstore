@@ -58,16 +58,23 @@ export const logout = () => {
     postRequest(url, {}, callback);
 };
 
+
 export const register = (data) => {
-    const url = `/user`;
+    const url = `${config.apiUrl}/register`;
     const callback = (response) => {
         if (response.status >=0) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-            history.push("/");
-            message.success("注册成功");
+            // localStorage.setItem('user', JSON.stringify(response.data));
+            // history.push("/");
+            message.success(response.msg);
         } else {
-            message.error(response.data);
+            message.error(response.msg);
         }
     };
     postRequest(url, data, callback);
+};
+
+export const checkDup= (username, callback) => {
+    const data = {username: username};
+    const url = `${config.apiUrl}/checkDup`;
+    postRequest_v2(url, data, callback);
 };

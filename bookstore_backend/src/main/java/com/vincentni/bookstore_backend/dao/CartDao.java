@@ -9,7 +9,7 @@ public interface CartDao {
 
     CartItem getCartItemByUserIdAndBookId(Integer userId,Integer bookId);
     void saveCartItem(CartItem cartItem);
-    void deleteCart(Integer itemId);
+    void deleteCartItemById(Integer cartItemId);
     void deleteCartByUserId(Integer userId);
 
 }

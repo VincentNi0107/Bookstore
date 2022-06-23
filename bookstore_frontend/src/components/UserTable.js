@@ -6,7 +6,6 @@ class UserTable extends React.Component {
     addFormRef = React.createRef();
     constructor(props) {
         super(props);
-
         this.state = {
             dataSource: [],
         };

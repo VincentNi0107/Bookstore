@@ -33,4 +33,9 @@ public class UserDaoImpl implements UserDao {
     public void saveUser(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public User getUserByName(String username) {
+        return userRepository.getByUsername(username);
+    }
 }

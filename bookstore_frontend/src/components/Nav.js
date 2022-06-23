@@ -14,8 +14,17 @@ export class Nav extends React.Component{
         super(props);        
         this.state={
             filterText:'',
+            admin: false,
         };
     }
+
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(user && user.userType === 'admin'){
+            this.setState({admin: true})
+        }
+    }
+
     handleFilterTextChange = (e) =>{
         this.setState({
             filterText:e.target.value
@@ -68,16 +77,28 @@ export class Nav extends React.Component{
                 </div>
                 <ul className="links-container">
                 <li className="link-item"><Link to={"/"} className="link">Home</Link></li>
-                {/* <li className="link-item"><a href="/signup" className="link">Registry</Link></li> */}
                 <li className="link-item"><Link to={"/search"} className="link">Books</Link></li>
                 <li className="link-item"><Link to={"/order"} className="link">Orders</Link></li>
                 <li className="link-item"><Link to={"/cart"} className="link">Cart</Link></li>
-                <li className="link-item"><Link to={"/usermanage"} className="link">UserManage</Link></li>
-                <li className="link-item"><Link to={"/bookmanage"} className="link">BookManage</Link></li>
+                {(this.state.admin)?
+                    (
+                        <li className="link-item"><Link to={"/usermanage"} className="link">UserManage</Link></li>
+                    ):
+                    (<div/>)
+                }
+                {(this.state.admin)?
+                    (
+                        <li className="link-item"><Link to={"/bookmanage"} className="link">BookManage</Link></li>
+                    ):
+                    (<div/>)
+                }
+                {(this.state.admin)?
+                    (
+                        <li className="link-item"><Link to={"/usersales"} className="link">UserSales</Link></li>
+                        ):
+                    (<div/>)
+                }      
                 <li className="link-item"><Link to={"/booksales"} className="link">BookSales</Link></li>
-                <li className="link-item"><Link to={"/usersales"} className="link">UserSales</Link></li>
-                
-                {/* <li className="link-item"><a href="/product" className="link">Product</a></li> */}
                 </ul>
             </nav>
 

@@ -1,5 +1,6 @@
 package com.vincentni.bookstore_backend.controller;
 import com.vincentni.bookstore_backend.constant.Constant;
+import com.vincentni.bookstore_backend.dto.NewUserDTO;
 import com.vincentni.bookstore_backend.entity.Book;
 import com.vincentni.bookstore_backend.entity.User;
 import com.vincentni.bookstore_backend.service.UserService;
@@ -41,5 +42,17 @@ public class UserController {
     public Msg unban(@RequestParam("userId") Integer userId){
         System.out.println("unban");
         return userService.unBanUser(userId);
+    }
+
+    @RequestMapping("/checkDup")
+    public Msg checkDup(@RequestParam("username") String userName){
+        System.out.println("checkDup");
+        return userService.checkUsernameDup(userName);
+    }
+
+    @RequestMapping("/register")
+    public Msg register(@RequestBody NewUserDTO newUserDTO){
+        System.out.println("register");
+        return userService.addUser(newUserDTO);
     }
 }

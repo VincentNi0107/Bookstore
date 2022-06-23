@@ -2,6 +2,7 @@ package com.vincentni.bookstore_backend.serviceimpl;
 
 import com.vincentni.bookstore_backend.constant.Constant;
 import com.vincentni.bookstore_backend.dao.UserDao;
+import com.vincentni.bookstore_backend.dto.NewUserDTO;
 import com.vincentni.bookstore_backend.entity.User;
 import com.vincentni.bookstore_backend.service.UserService;
 import com.vincentni.bookstore_backend.utils.msgutils.Msg;
@@ -60,5 +61,29 @@ public class UserServiceImpl implements UserService {
         else {
             return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.ERROR_UNBAN);
         }
+    }
+
+    @Override
+    public Msg checkUsernameDup(String username) {
+        User user=userDao.getUserByName(username);
+        if(user!=null){
+            return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.ERROR_NAMEDUP);
+        }
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS,MsgUtil.SUCCESS_NAMEVALID);
+    }
+
+    @Override
+    public Msg addUser(NewUserDTO newUserDTO) {
+        User user=userDao.getUserByName(newUserDTO.getUsername());
+        if(user!=null){
+            return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.ERROR_NAMEDUP);
+        }
+        User newUser=new User();
+        newUser.setUserType("customer");
+        newUser.setEmail(newUserDTO.getEmail());
+        newUser.setPassword(newUserDTO.getPassword());
+        newUser.setUsername(newUserDTO.getUsername());
+        userDao.saveUser(newUser);
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS,MsgUtil.SUCCESS_REGISTER);
     }
 }

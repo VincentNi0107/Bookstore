@@ -9,4 +9,5 @@ public interface UserDao {
     User getUserById(Integer userId);
     List<User> getAllUsers();
     void saveUser(User user);
+    User getUserByName(String username);
 }

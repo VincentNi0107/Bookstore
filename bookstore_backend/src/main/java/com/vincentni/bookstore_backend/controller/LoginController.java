@@ -28,7 +28,9 @@ public class LoginController {
         String password = params.get(Constant.PASSWORD);
         User user = userService.checkUser(username, password);
         if(user != null){
-
+            if(user.getUserType().equals("ban")){
+                return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.ACCOUNT_BAN);
+            }
             JSONObject obj = new JSONObject();
             obj.put(Constant.USER_ID, user.getUserId());
             obj.put(Constant.USERNAME, user.getUsername());
